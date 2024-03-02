@@ -23,13 +23,13 @@ class Episode
     private ?string $synopsis = null;
 
     #[ORM\Column]
-    private ?int $number_episode = null;
+    private ?int $numberEpisode = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $duration = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $broadcasting_date = null;
+    private ?\DateTimeInterface $broadcastingDate = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'episodes')]
     private Collection $users;
@@ -77,12 +77,12 @@ class Episode
 
     public function getNumberEpisode(): ?int
     {
-        return $this->number_episode;
+        return $this->numberEpisode;
     }
 
-    public function setNumberEpisode(int $number_episode): static
+    public function setNumberEpisode(int $numberEpisode): static
     {
-        $this->number_episode = $number_episode;
+        $this->numberEpisode = $numberEpisode;
 
         return $this;
     }
@@ -101,12 +101,12 @@ class Episode
 
     public function getBroadcastingDate(): ?\DateTimeInterface
     {
-        return $this->broadcasting_date;
+        return $this->broadcastingDate;
     }
 
-    public function setBroadcastingDate(\DateTimeInterface $broadcasting_date): static
+    public function setBroadcastingDate(\DateTimeInterface $broadcastingDate): static
     {
-        $this->broadcasting_date = $broadcasting_date;
+        $this->broadcastingDate = $broadcastingDate;
 
         return $this;
     }

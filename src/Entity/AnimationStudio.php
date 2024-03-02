@@ -16,7 +16,7 @@ class AnimationStudio
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $studioName = null;
 
     #[ORM\OneToMany(targetEntity: Animation::class, mappedBy: 'AnimationStudio')]
     private Collection $animations;
@@ -31,14 +31,14 @@ class AnimationStudio
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getStudioName(): ?string
     {
-        return $this->name;
+        return $this->studioName;
     }
 
-    public function setName(string $name): static
+    public function setStudioName(string $studioName): static
     {
-        $this->name = $name;
+        $this->studioName = $studioName;
 
         return $this;
     }

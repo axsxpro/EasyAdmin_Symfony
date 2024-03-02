@@ -19,7 +19,7 @@ class Season
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?int $number_season = null;
+    private ?int $numberSeason = null;
 
     #[ORM\ManyToOne(inversedBy: 'seasons')]
     #[ORM\JoinColumn(nullable: false)]
@@ -52,12 +52,12 @@ class Season
 
     public function getNumberSeason(): ?int
     {
-        return $this->number_season;
+        return $this->numberSeason;
     }
 
-    public function setNumberSeason(int $number_season): static
+    public function setNumberSeason(int $numberSeason): static
     {
-        $this->number_season = $number_season;
+        $this->numberSeason = $numberSeason;
 
         return $this;
     }

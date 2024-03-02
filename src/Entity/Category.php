@@ -16,7 +16,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $category = null;
+    private ?string $categoryName = null;
 
     #[ORM\ManyToMany(targetEntity: Animation::class, mappedBy: 'category')]
     private Collection $animations;
@@ -31,14 +31,14 @@ class Category
         return $this->id;
     }
 
-    public function getCategory(): ?string
+    public function getCategoryName(): ?string
     {
-        return $this->category;
+        return $this->categoryName;
     }
 
-    public function setCategory(string $category): static
+    public function setCategoryName(string $categoryName): static
     {
-        $this->category = $category;
+        $this->categoryName = $categoryName;
 
         return $this;
     }
