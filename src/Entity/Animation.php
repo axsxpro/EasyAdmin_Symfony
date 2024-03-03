@@ -39,14 +39,12 @@ class Animation
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'animations')]
     private Collection $category;
 
-    #[ORM\OneToMany(targetEntity: Season::class, mappedBy: 'animation')]
-    private Collection $seasons;
 
     public function __construct()
     {
         $this->episodes = new ArrayCollection();
         $this->category = new ArrayCollection();
-        $this->seasons = new ArrayCollection();
+    
     }
 
     public function getId(): ?int
@@ -168,33 +166,4 @@ class Animation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Season>
-     */
-    public function getSeasons(): Collection
-    {
-        return $this->seasons;
-    }
-
-    public function addSeason(Season $season): static
-    {
-        if (!$this->seasons->contains($season)) {
-            $this->seasons->add($season);
-            $season->setAnimation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSeason(Season $season): static
-    {
-        if ($this->seasons->removeElement($season)) {
-            // set the owning side to null (unless already changed)
-            if ($season->getAnimation() === $this) {
-                $season->setAnimation(null);
-            }
-        }
-
-        return $this;
-    }
 }

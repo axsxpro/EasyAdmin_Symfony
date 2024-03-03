@@ -31,6 +31,9 @@ class Episode
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $broadcastingDate = null;
 
+    #[ORM\Column]
+    private ?int $numberSeason = null;
+
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'episodes')]
     private Collection $users;
 
@@ -38,8 +41,6 @@ class Episode
     #[ORM\JoinColumn(nullable: false)]
     private ?Animation $animation = null;
 
-    #[ORM\ManyToOne(inversedBy: 'episodes')]
-    private ?Season $season = null; 
 
     public function __construct()
     {
@@ -111,6 +112,18 @@ class Episode
         return $this;
     }
 
+    public function getNumberSeason(): ?int
+    {
+        return $this->numberSeason;
+    }
+
+    public function setNumberSeason(int $numberSeason): static
+    {
+        $this->numberSeason = $numberSeason;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, User>
      */
@@ -147,15 +160,5 @@ class Episode
         return $this;
     }
 
-    public function getSeason(): ?Season
-    {
-        return $this->season;
-    }
 
-    public function setSeason(?Season $season): static
-    {
-        $this->season = $season;
-
-        return $this;
-    }
 }
