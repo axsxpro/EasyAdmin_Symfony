@@ -117,7 +117,7 @@ class AppFixtures extends Fixture
             'Shōjo',
             'Josei',
             'Kodomo',
-            'seijin'
+            'Seijin'
     
         ];
 
@@ -170,6 +170,10 @@ class AppFixtures extends Fixture
         $episodesData = [
 
             ['title' => 'Cruauté', 'synopsis' => 'Kamado Tanjirô revient chez lui après avoir vendu du charbon pour découvrir sa maison attaquée. Sa sœur semble avoir survécu, mais elle agit comme un démon, ce qui remet en question les croyances de Tanjirô sur leur existence.', 'duration' => new \DateInterval('PT23M'), 'broadcasting_date' => new \DateTime('2019-04-06'), 'episode_number' => 1, 'season_number' => 1],
+            ['title' => 'À toi qui vis 2000 ans plus tard : La chute de Shiganshina - Partie 1', 'synopsis' =>'Après un siècle de paix, l\'humanité est brusquement confrontée au retour de la terreur des Titans.', 'duration' => new \DateInterval('PT23M'), 'broadcasting_date' => new \DateTime('2013-04-14'), 'episode_number' => 1, 'season_number' => 1],
+            ['title' => 'Ryomen Sukuna', 'synopsis' => 'Yuji Itadori, élève de seconde, est attiré par le club de spiritisme de son lycée, mais reste sceptique quant au surnaturel. Un étranger prétend récupérer un objet volé par Yuji dans une station météo, affirmant qu\'il s\'agit d\'une relique protectrice contre les monstres.', 'duration' => new \DateInterval('PT23M'), 'broadcasting_date' => new \DateTime('2020-10-02'), 'episode_number' => 1, 'season_number' => 1],
+            ['title' => 'Le chien et la tronçonneuse', 'synopsis' => 'Denji mène une vie calme avec Pochita, son chien-démon-tronçonneuse, malgré ses dettes. Engagé par la pègre comme chasseur de démons, il se retrouve piégé, risquant ainsi sa vie.', 'duration' => new \DateInterval('PT23M'), 'broadcasting_date' => new \DateTime('2022-10-11'), 'episode_number' => 1, 'season_number' => 1],
+            
             
         ];
 
@@ -182,7 +186,7 @@ class AppFixtures extends Fixture
             $episode->setBroadcastingDate($episodeData['broadcasting_date']);
             $episode->setNumberEpisode($episodeData['episode_number']);
             $episode->setNumberSeason($episodeData['season_number']);
-        
+
             $manager->persist($episode);
         
             $episodeTable[] = $episode;
