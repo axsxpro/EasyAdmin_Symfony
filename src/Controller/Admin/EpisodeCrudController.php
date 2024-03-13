@@ -4,7 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Episode;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -15,14 +18,17 @@ class EpisodeCrudController extends AbstractCrudController
         return Episode::class;
     }
 
-    /*
+    
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id'),
             TextField::new('title'),
-            TextEditorField::new('description'),
+            NumberField::new('numberEpisode')->setLabel('N° episode'),
+            NumberField::new('numberSeason')->setLabel('N° season'),
+            AssociationField::new('animation')->setLabel('Animation Name'), // utilisé lorsque l'entité possède une relation vers une seule autre entité
+
         ];
     }
-    */
+    
 }
