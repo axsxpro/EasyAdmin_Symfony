@@ -22,6 +22,7 @@ class EpisodeCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            
             IdField::new('id'),
             TextField::new('title'),
             NumberField::new('numberEpisode')->setLabel('N° episode'),
