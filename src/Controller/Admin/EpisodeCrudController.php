@@ -23,7 +23,7 @@ class EpisodeCrudController extends AbstractCrudController
     {
         return [
             
-            IdField::new('id'),
+            IdField::new('id')->hideOnForm(),
             TextField::new('title'),
             NumberField::new('numberEpisode')->setLabel('N° episode'),
             NumberField::new('numberSeason')->setLabel('N° season'),

@@ -11,7 +11,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -38,35 +37,36 @@ class UserCrudController extends AbstractCrudController
         //affiche les champs dans le Dashboard
         $fields = [
 
+            //->hideOnForm() : masquer le champs dans la page modification et creation
             IdField::new('id')->hideOnForm()->setFormTypeOption('disabled', true)->setSortable(false), // le hidden form permet de cacher le champs dans n'importe quel formulaire (creation ou modification)
-            TextField::new('Name')
+            
+            TextField::new('Name')->hideWhenUpdating()
             ->setFormTypeOption('constraints', [
                 new NotBlank(['message' => 'Please enter a name.']),
             ]),
-            TextField::new('Firstname')
+            
+            TextField::new('Firstname')->hideWhenUpdating()
             ->setFormTypeOption('constraints', [
                 new NotBlank(['message' => 'Please enter a firstname.']),
             ]),
+            
             EmailField::new('Email')
             ->setFormTypeOption('constraints', [
                 new NotBlank(['message' => 'Please enter an email address.']),
             ]),
+            
+            CollectionField::new('Episodes')->setLabel('Episode(s) seen')->hideOnForm(),
+
         ];
 
 
-        // le champs épisode sera caché dans la page creation mais pas dans la page modification contrairement à la methode 'hideOnForm()'
-        // si la page actuelle n'est pas celle de création d'un nouvel utilisateur
-        if (Crud::PAGE_NEW !== $pageName) {
-
-            // alors affichage du champs épisode 
-            $fields[] = CollectionField::new('Episodes')->setLabel('Episode(s) seen');
-        }
 
         // si la page actuelle est celle de création d'un nouvel utilisateur
+        // possibilité d'utiliser ->onlyWhenCreating()
         if (Crud::PAGE_NEW === $pageName) {
 
             // alors ajouter le champ de mot de passe
-            $fields[] = TextField::new('password')
+            $fields[] = TextField::new('password')->onlyOnForms()
                 ->setLabel('Password')
                 ->setFormTypeOption('attr', ['autocomplete' => 'new-password']) // empêche le navigateur de proposer des suggestions de mots de passe
                 ->setFormTypeOption('constraints', [
