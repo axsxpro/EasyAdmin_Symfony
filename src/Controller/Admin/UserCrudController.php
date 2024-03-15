@@ -11,9 +11,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
-class UserCrudController extends AbstractCrudController {
-
+class UserCrudController extends AbstractCrudController
+{
 
     private $passwordHasher;
 
@@ -34,16 +38,27 @@ class UserCrudController extends AbstractCrudController {
         //affiche les champs dans le Dashboard
         $fields = [
 
-            IdField::new('id'),
-            TextField::new('Name'),
-            TextField::new('Firstname'),
-            EmailField::new('Email'),
+            IdField::new('id')->hideOnForm()->setFormTypeOption('disabled', true)->setSortable(false), // le hidden form permet de cacher le champs dans n'importe quel formulaire (creation ou modification)
+            TextField::new('Name')
+            ->setFormTypeOption('constraints', [
+                new NotBlank(['message' => 'Please enter a name.']),
+            ]),
+            TextField::new('Firstname')
+            ->setFormTypeOption('constraints', [
+                new NotBlank(['message' => 'Please enter a firstname.']),
+            ]),
+            EmailField::new('Email')
+            ->setFormTypeOption('constraints', [
+                new NotBlank(['message' => 'Please enter an email address.']),
+            ]),
         ];
 
+
+        // le champs épisode sera caché dans la page creation mais pas dans la page modification contrairement à la methode 'hideOnForm()'
         // si la page actuelle n'est pas celle de création d'un nouvel utilisateur
         if (Crud::PAGE_NEW !== $pageName) {
 
-           // alors affichage du champs épisode 
+            // alors affichage du champs épisode 
             $fields[] = CollectionField::new('Episodes')->setLabel('Episode(s) seen');
         }
 
@@ -53,8 +68,31 @@ class UserCrudController extends AbstractCrudController {
             // alors ajouter le champ de mot de passe
             $fields[] = TextField::new('password')
                 ->setLabel('Password')
-                ->setFormTypeOption('mapped', false) // la valeur saisie dans ce champ ne sera pas automatiquement associée à une propriété de l'entité User lors de la soumission du formulaire. Cela est nécessaire car le mot de passe doit être traité différemment et hashé avant d'être stocké dans la base de données.
-                ->setFormTypeOption('attr', ['autocomplete' => 'new-password']); // empêche le navigateur de proposer des suggestions de mots de passe
+                ->setFormTypeOption('attr', ['autocomplete' => 'new-password']) // empêche le navigateur de proposer des suggestions de mots de passe
+                ->setFormTypeOption('constraints', [
+                    new Regex([
+                        'pattern' => '/^(?=.*[a-z])/',
+                        'message' => 'The password must contain at least one lowercase letter.'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[A-Z])/',
+                        'message' => 'The password must contain at least one uppercase letter.'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*\d)/',
+                        'message' => 'The password must contain at least one digit.'
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[!@#$%^&*()\-_=+{};:,<.>ยง~\\\\[\]])/',
+                        'message' => 'The password must contain at least one special character.'
+                    ]),    
+                    new Length([
+                        'min' => 8,
+                        'max' => 15,
+                        'minMessage' => 'The password must contain at least {{ limit }} characters.'
+                    ]),
+                    
+                ]);
 
         }
 
@@ -64,16 +102,23 @@ class UserCrudController extends AbstractCrudController {
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
+
+        $user = $entityInstance; // $entityInstance : représente une instance de l'entité User
+
         // Si l'entité est de type User et le mot de passe n'est pas vide
-        if ($entityInstance instanceof User && !empty($entityInstance->getPassword())) {
+        if ($user instanceof User && !empty($user->getPassword())) {
+
             // Hasher le mot de passe
-            $hashedPassword = $this->passwordHasher->hashPassword($entityInstance, $entityInstance->getPassword());
+            // $entityInstance->getPassword(): C'est la méthode qui récupère le mot de passe en clair (non haché) saisi par l'utilisateur dans le formulaire
+            $hashedPassword = $this->passwordHasher->hashPassword($user, $user->getPassword());
+
             // Définir le mot de passe hashé sur l'entité
-            $entityInstance->setPassword($hashedPassword);
+            $user->setPassword($hashedPassword);
         }
+
         // Persister l'entité
-        parent::persistEntity($entityManager, $entityInstance);
+        $entityManager->persist($user);
+        $entityManager->flush(); // Appliquer les changements à la base de données
+        
     }
-
-
 }
