@@ -45,5 +45,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Animation Studios', 'fa fa-video-camera', AnimationStudio::class);
         yield MenuItem::linkToCrud('Categories', 'fa fa-tags', Category::class);
         yield MenuItem::linkToCrud('Types', 'fa fa-list-alt', Type::class);
+
     }
 }
