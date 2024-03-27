@@ -47,4 +47,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Types', 'fa fa-list-alt', Type::class);
 
     }
+
 }

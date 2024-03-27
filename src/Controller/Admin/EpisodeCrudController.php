@@ -25,9 +25,9 @@ class EpisodeCrudController extends AbstractCrudController
     {
         return [
             
-            IdField::new('id')->hideOnForm(),
+            IdField::new('id')->hideOnForm(), //cacher des formulaires (creation, modification)
             TextField::new('title'),
-            TextField::new('synopsis')->onlyOnForms(),
+            TextField::new('synopsis')->onlyOnForms(), //seulement dans les formulaires
             NumberField::new('numberEpisode')->setLabel('N° episode'),
             TimeField::new('duration')->onlyOnForms(),
             DateField::new('broadcastingDate')->onlyOnForms(),
