@@ -55,5 +55,4 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
 
     }
 
-
 }
