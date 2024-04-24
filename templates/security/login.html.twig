@@ -10,6 +10,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
 {% endblock %}
 
+
 {% block body %}
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -66,6 +67,13 @@
                                     </div>
                                 </div>
 
+                                
+                              <div class="form-group row justify-content-center">
+                              <div class="col-md-6 offset-md-4">
+                    <p><a class="nav-link active" aria-current="page" href="/reset-password">Forgot password ?</a></p>
+                </div>
+                </div>
+
                                 <div class="form-group row justify-content-center">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">Login</button>
@@ -80,9 +88,11 @@
             </div>
         </div>
     </main>
+
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('asset/js/clearFormFields.js') }}"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 {% endblock %}

@@ -54,5 +54,6 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
         return $response;
 
     }
+    
 
 }

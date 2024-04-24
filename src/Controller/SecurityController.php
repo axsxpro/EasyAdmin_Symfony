@@ -14,7 +14,7 @@ class SecurityController extends AbstractController
 {
 
 
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         // if ($this->getUser()) {
@@ -46,4 +46,6 @@ class SecurityController extends AbstractController
 
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+
 }
