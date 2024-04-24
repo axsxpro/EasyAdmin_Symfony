@@ -1,0 +1,12 @@
+.container {
+  display: block;
+  justify-content: center;
+  padding: 100px;
+}
+
+.returnLoginPage {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+

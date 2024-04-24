@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.reinit-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
+.container-form {
+  align-items: center;
+  padding: 50px;
+}
+
+.reinit-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
