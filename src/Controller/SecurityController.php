@@ -13,7 +13,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
 
-
     #[Route(path: '/', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
@@ -21,23 +20,23 @@ class SecurityController extends AbstractController
         //     return $this->redirectToRoute('target_path');
         // }
 
+
         // Récupérer le paramètre errorAccessDenied de la requête dans AccessDeniedHandler
-        $errorAccessDenied = $request->query->get('errorAccessDenied');
+        $request->query->get('errorAccessDenied');
 
-
-        // Ajouter un message flash si errorAccessDenied est défini à true
-        if ($errorAccessDenied) {
-
-            $this->addFlash('errorAccessDenied', 'Access Denied.');
-        
-        }
-
+     
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', [
+
+            'last_username' => $lastUsername,
+            'error' => $error,
+            //'errorAccessDenied' => $errorAccessDenied
+
+        ]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
@@ -46,6 +45,4 @@ class SecurityController extends AbstractController
 
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
-
-
 }

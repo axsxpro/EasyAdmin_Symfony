@@ -42,8 +42,9 @@
 
                             {# affichage du flash 'access denied' lorsque l'utilisateur est déconnecté #}
                             {% if app.request.query.has('errorAccessDenied') %}
-                                <div class="alert alert-danger">Access Denied.</div>
+                                <div class="alert alert-danger" id="alert_access_denied">Access Denied.</div>
                             {% endif %}
+
 
                             {# affichage du flash 'access denied' lorsque l'utilisateur est connecté #}
                             {# {% if app.session.flashbag.has('errorAccessDenied') %}
@@ -56,6 +57,7 @@
                                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                             {% endif %}
 
+ 
                             <div class="form-group row">
                                 <label for="inputEmail" class="col-md-4 col-form-label text-md-right">Email</label>
                                 <div class="col-md-6">
