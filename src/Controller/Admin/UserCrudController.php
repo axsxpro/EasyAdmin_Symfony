@@ -10,7 +10,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -50,9 +52,10 @@ class UserCrudController extends AbstractCrudController
                 new NotBlank(['message' => 'Please enter a firstname.']),
             ]),
             
-            EmailField::new('Email')
-            ->setFormTypeOption('constraints', [
-                new NotBlank(['message' => 'Please enter an email address.']),
+            EmailField::new('email')
+                ->setFormTypeOption('constraints', [
+                    new NotBlank(['message' => 'Please enter an email address.']),
+                    new Email(['message' => 'Please enter a valid email address.']),
             ]),
             
             CollectionField::new('Episodes')->setLabel('Episode(s) seen')->hideOnForm(),
@@ -68,6 +71,7 @@ class UserCrudController extends AbstractCrudController
             // alors ajouter le champ de mot de passe
             $fields[] = TextField::new('password')->onlyOnForms()
                 ->setLabel('Password')
+                ->setFormType(PasswordType::class)
                 ->setFormTypeOption('attr', ['autocomplete' => 'new-password']) // empêche le navigateur de proposer des suggestions de mots de passe
                 ->setFormTypeOption('constraints', [
                     new Regex([
